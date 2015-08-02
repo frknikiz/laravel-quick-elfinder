@@ -18,6 +18,10 @@ Begin with installing this package through Composer. Edit your project's compose
 	        "frknikiz/laravel-quick-elfider":"dev-master"
 	}
 
+Or require Composer from the Terminal:
+
+    composer require frknikiz/laravel-quick-elfinder
+
 Next, update Composer from the Terminal:
 
     composer update
