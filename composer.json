@@ -1,0 +1,27 @@
+{
+    "name": "frknikiz/laravel-quick-elfinder",
+    "description": "Send messages to GCM(Google Cloud Messaging) topics.Easily send push notification to devices",
+    "keywords": ["fast","gcm", "topic","messaging","google","cloud","messaging","laravel","package","laravel 4.2"],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Furkan Ikiz",
+            "email": "frknikiz@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "barryvdh/laravel-elfinder": "0.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/config",
+            "src/views"
+        ],
+        "psr-0": {
+            "Frknikiz\\CustomElfinder\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
