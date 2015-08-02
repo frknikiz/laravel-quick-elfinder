@@ -1,7 +1,7 @@
 {
     "name": "frknikiz/laravel-quick-elfinder",
     "description": "Laravel Quick Elfinder package allows you to use Elfinder quickly.",
-    "keywords": ["fast","gcm", "topic","messaging","google","cloud","messaging","laravel","package","laravel 4.2"],
+    "keywords": ["laravel","elfinder", "quick","package","laravel4.2"],
     "license": "Apache-2.0",
     "authors": [
         {
