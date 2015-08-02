@@ -1,4 +1,6 @@
 # Laravel Quick Elfinder #
+[![Total Downloads](https://poser.pugx.org/frknikiz/laravel-quick-elfinder/downloads)](https://packagist.org/packages/frknikiz/laravel-quick-elfinder) 
+[![License](https://poser.pugx.org/frknikiz/laravel-quick-elfinder/license)](https://packagist.org/packages/frknikiz/laravel-quick-elfinder)
 
 Laravel Quick Elfinder package allows you to use [Elfinder](https://github.com/barryvdh/laravel-elfinder) quickly.
 > This packages is only available for Laravel 4.*
