@@ -18,7 +18,8 @@ Begin with installing this package through Composer. Edit your project's compose
 
 Next, update Composer from the Terminal:
 
-composer update
+    composer update
+    
 Open `app/config/app.php`, and add a new item to the providers array.
 
 	'Frknikiz\CustomElfinder\CustomElfinderServiceProvider'
@@ -29,7 +30,11 @@ Publish Elfinder config from the Terminal:
 
 > Access to security "isAdminLogin" name, you must define a filter.
 
-Finally,Publish Elfinder asset from the Terminal:
+Publish Elfinder Asset from the Terminal:
+
+    php artisan elfinder:publish
+    
+Finally,Publish Quick Elfinder Asset from the Terminal:
 
 	php artisan asset:publish frknikiz/laravel-quick-elfinder
 
