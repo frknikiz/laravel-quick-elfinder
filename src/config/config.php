@@ -44,10 +44,15 @@
         |
         */
 
-        'roots'   => array(array('driver'      => 'LocalFileSystem', 'path' => public_path("uploads"),
-                                 'URL'         => url("uploads"), 'dotFiles' => false, 'uploadOrder' => array('allow'),
-                                 'uploadAllow' => array('image'), 'uploadMaxSize' => "1M"), "encoding" => "UTF-8",
-                           "locale"                                                                    => "tr_TR.UTF-8",),
+        'roots'   => array(array('driver'      => 'LocalFileSystem',
+                                 'path' => public_path("uploads"),
+                                 'URL'         => url("uploads"),
+                                 'dotFiles' => false,
+                                 'uploadOrder' => array('allow'),
+                                 'uploadAllow' => array('image'),
+                                 'uploadMaxSize' => "1M"),
+                                 "encoding" => "UTF-8",
+                                 "locale"        => "tr_TR.UTF-8",),
 
         /*
         |--------------------------------------------------------------------------
@@ -59,21 +64,24 @@
         |
         */
 
-        'options' => array('bind' => array('mkdir mkfile duplicate upload paste' => function ($cmd, $result, $args, $elfinder)
-        {
-            $files = $result['added'];
-            foreach($files as $file)
+        'options' => array(
+            'bind' => array('mkdir mkfile duplicate upload paste' =>
+            function ($cmd, $result, $args, $elfinder)
             {
-                $filename = permalink($file["name"]); // just for test
-                $arg      = array('target' => $file['hash'], 'name' => $filename);
-                $elfinder->exec('rename', $arg);
-            }
-            return true;
-        }, "rename.pre"                                                          => function ($cmd, &$result, $args)
-        {
-            $new_name       = permalink($result["name"]);
-            $result["name"] = $new_name;
-        }),),
+                $files = $result['added'];
+                foreach($files as $file)
+                {
+                    $filename = permalink($file["name"]); // just for test
+                    $arg      = array('target' => $file['hash'], 'name' => $filename);
+                    $elfinder->exec('rename', $arg);
+                }
+                return true;
+            },
+            "rename.pre" => function ($cmd, &$result, $args)
+                            {
+                                $new_name       = permalink($result["name"]);
+                                $result["name"] = $new_name;
+                            }),),
 
         /*
         |--------------------------------------------------------------------------
