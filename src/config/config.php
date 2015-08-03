@@ -1,98 +1,90 @@
 <?php
+    function permalink($string)
+    {
+        $find    = array('Ç', 'Ş', 'Ğ', 'Ü', 'İ', 'Ö', 'ç', 'ş', 'ğ', 'ü', 'ö', 'ı', '+', '#');
+        $replace = array('c', 's', 'g', 'u', 'i', 'o', 'c', 's', 'g', 'u', 'o', 'i', 'plus', 'sharp');
+        $string  = strtolower(str_replace($find, $replace, $string));
+        $string  = preg_replace("@[^A-Za-z0-9\-_\.\+]@i", ' ', $string);
+        $string  = trim(preg_replace('/\s+/', ' ', $string));
+        $string  = str_replace(' ', '-', $string);
+        return $string;
+    }
 
-return array(
+    return array(
 
-    /*
-    |--------------------------------------------------------------------------
-    | Upload dir
-    |--------------------------------------------------------------------------
-    |
-    | The dir where to store the images (relative from public)
-    |
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Upload dir
+        |--------------------------------------------------------------------------
+        |
+        | The dir where to store the images (relative from public)
+        |
+        */
 
-    'dir' => "uploads",
+        'dir'     => "uploads",
 
-    /*
-    |--------------------------------------------------------------------------
-    | Access filter
-    |--------------------------------------------------------------------------
-    |
-    | Filter callback to check the files
-    |
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Access filter
+        |--------------------------------------------------------------------------
+        |
+        | Filter callback to check the files
+        |
+        */
 
-    'access' => 'Barryvdh\Elfinder\Elfinder::checkAccess',
+        'access'  => 'Barryvdh\Elfinder\Elfinder::checkAccess',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Roots
-    |--------------------------------------------------------------------------
-    |
-    | By default, the roots file is LocalFileSystem, with the above public dir.
-    | If you want custom options, you can set your own roots below.
-    |
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Roots
+        |--------------------------------------------------------------------------
+        |
+        | By default, the roots file is LocalFileSystem, with the above public dir.
+        | If you want custom options, you can set your own roots below.
+        |
+        */
 
-    'roots'  => array(
-                    array(
-                        'driver' => 'LocalFileSystem',
-                        'path'   => public_path("uploads"),
-                        'URL'    => url("uploads"),
-                        'dotFiles'   => false,
-                        'uploadOrder'=> array( 'allow' ),
-                        'uploadAllow'=>array('image'),
-                        'uploadMaxSize'=>"1M"
-                    ),
-                    'plugin' => array(
-                        'Sanitizer' => array(
-                            'enable' => true,
-                            'targets'  => array(' ','\\','/',':','*','?','"','<','>','|','Ç','ç','Ğ','ğ','ı','İ','Ö','ö','Ş','ş','Ü','ü'), // target chars
-                            'replace'  =>"-"   // replace to this
-                        )
-                    ),
-                    "encoding"=>"UTF-8",
-                    "locale"=>"tr_TR.UTF-8",
-                     ),
-    
-    /*
-    |--------------------------------------------------------------------------
-    | Options
-    |--------------------------------------------------------------------------
-    |
-    | These options are merged, together with 'roots' and passed to the Connector.
-    | See https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1
-    |
-    */
+        'roots'   => array(array('driver'      => 'LocalFileSystem', 'path' => public_path("uploads"),
+                                 'URL'         => url("uploads"), 'dotFiles' => false, 'uploadOrder' => array('allow'),
+                                 'uploadAllow' => array('image'), 'uploadMaxSize' => "1M"), "encoding" => "UTF-8",
+                           "locale"                                                                    => "tr_TR.UTF-8",),
 
-    'options' => array(
-        'plugin' => array(
-            'Sanitizer' => array(
-                'enable' => true,
-                'targets'  => array(' ','\\','/',':','*','?','"','<','>','|','Ç','ç','Ğ','ğ','ı','İ','Ö','ö','Ş','ş','Ü','ü'), // target chars
-                'replace'  => "-"  // replace to this  // replace to this
-            )
-        ),
-        'bind' => array(
-            'mkdir.pre mkfile.pre rename.pre' => array(
-                'Plugin.Sanitizer.cmdPreprocess'
-            ),
-            'upload.presave' => array(
-                'Plugin.Sanitizer.onUpLoadPreSave'
-            )
-        ),
-    ),
-    
-    /*
-    |--------------------------------------------------------------------------
-    | CSRF
-    |--------------------------------------------------------------------------
-    |
-    | CSRF in a state by default false.
-    | If you want to use CSRF it can be replaced with true (boolean).
-    |
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Options
+        |--------------------------------------------------------------------------
+        |
+        | These options are merged, together with 'roots' and passed to the Connector.
+        | See https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1
+        |
+        */
 
-    'csrf'=>null,
+        'options' => array('bind' => array('mkdir mkfile duplicate upload paste' => function ($cmd, $result, $args, $elfinder)
+        {
+            $files = $result['added'];
+            foreach($files as $file)
+            {
+                $filename = permalink($file["name"]); // just for test
+                $arg      = array('target' => $file['hash'], 'name' => $filename);
+                $elfinder->exec('rename', $arg);
+            }
+            return true;
+        }, "rename.pre"                                                          => function ($cmd, &$result, $args)
+        {
+            $new_name       = permalink($result["name"]);
+            $result["name"] = $new_name;
+        }),),
 
-);
+        /*
+        |--------------------------------------------------------------------------
+        | CSRF
+        |--------------------------------------------------------------------------
+        |
+        | CSRF in a state by default false.
+        | If you want to use CSRF it can be replaced with true (boolean).
+        |
+        */
+
+        'csrf'    => null,
+
+    );
