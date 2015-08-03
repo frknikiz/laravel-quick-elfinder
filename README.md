@@ -68,9 +68,19 @@ Example:
 
 In this sample above, when you click instance of "find" class, elfinder view will appear. After you choose your image source ,  image url will place in input.
 
-"find" Class : Opens Elfinder Window
+"**find**" Class : Opens Elfinder Window
 
-"remove" Class : Clears İnput
+"**remove**" Class : Clears İnput
+
+## Event ##
+
+**imageSelected** : It is triggered after selecting pictures.
+  
+     $(document).on('imageSelected', function (e, data)
+    	{
+    		alert("Image Selected !!!"+data.path);
+    	});
+            
 
 # References #
 

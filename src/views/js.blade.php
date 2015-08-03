@@ -21,6 +21,6 @@
     function processFile(file)
     {
         basilan.parents('div').find('input[type="text"]').val(file.path);
-        console.log(file);
+        $( document ).trigger( "imageSelected", file );
     }
 </script>
