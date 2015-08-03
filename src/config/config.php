@@ -1,7 +1,7 @@
 <?php
     function permalink($string)
     {
-        $find    = array('Ç', 'Þ', 'Ð', 'Ü', 'Ý', 'Ö', 'ç', 'þ', 'ð', 'ü', 'ö', 'ý', '+', '#');
+        $find    = array('Ã‡', 'Åž', 'Äž', 'Ãœ', 'Ä°', 'Ã–', 'Ã§', 'ÅŸ', 'ÄŸ', 'Ã¼', 'Ã¶', 'Ä±', '+', '#');
         $replace = array('c', 's', 'g', 'u', 'i', 'o', 'c', 's', 'g', 'u', 'o', 'i', 'plus', 'sharp');
         $string  = strtolower(str_replace($find, $replace, $string));
         $string  = preg_replace("@[^A-Za-z0-9\-_\.\+]@i", ' ', $string);
